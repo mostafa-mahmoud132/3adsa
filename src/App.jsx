@@ -4,6 +4,8 @@ import Home from './Component/Home/Home'
 import Blog from './Component/Blog/Blog'
 import Page from './Component/Blog/page/Page'
 import About from './Component/About/About'
+import CompPrivacy from './Component/CompPrivacy/CompPrivacy'
+import CompService from './Component/CompService/CompService'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +16,10 @@ const router = createBrowserRouter([
       { path: 'blog', element: <Blog /> },
       { path: 'blog/:slug', element: <Page /> },
       { path: 'about', element: <About /> },
-      { path: '*', element: <h1>Page not found</h1> }
+      { path: '*', element: <h1>Page not found</h1> },
+      { path:'/privacy', element:<CompPrivacy/>},
+      { path:'/service', element:<CompService/>}
+
     ]
   }
 ])

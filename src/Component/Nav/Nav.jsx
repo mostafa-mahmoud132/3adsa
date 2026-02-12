@@ -1,29 +1,39 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation(); 
 
-  const navClass = ({ isActive }) =>
-    `px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${isActive
-      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
-      : "text-neutral-400 hover:text-white"
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+
+  const navClass = (path) =>
+    `px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+      location.pathname !== "/privacy" && location.pathname === path
+        ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+        : "text-neutral-400 hover:text-white"
     }`;
 
-  const mobileNavClass = ({ isActive }) =>
-    `px-4 py-2 rounded transition-colors ${isActive
-      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
-      : "text-neutral-400 hover:text-white hover:bg-[#262626]"
+  const mobileNavClass = (path) =>
+    `px-4 py-2 rounded transition-colors ${
+      location.pathname !== "/privacy" && location.pathname === path
+        ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+        : "text-neutral-400 hover:text-white hover:bg-[#262626]"
     }`;
 
   return (
-
-    <div className=" fixed top-0 left-0 w-full z-50 bg-black  py-2 border-b border-[#262626] text-white px-4 md:px-10">
+    <div className="fixed top-0 left-0 w-full z-50 bg-black py-2 border-b border-[#262626] text-white px-4 md:px-10">
       <div className="flex w-[85%] mx-auto justify-between items-center h-20">
-        <NavLink
-          className="flex items-center gap-3 group"
+        <Link
           to="/"
-          onClick={() => setMenuOpen(false)}
+          className="flex items-center gap-3 group"
+          onClick={() => {
+            setMenuOpen(false);
+            handleScrollToTop();
+          }}
         >
           <div className="relative w-12 h-12 rounded-xl overflow-hidden group-hover:scale-105 transition-all duration-300">
             <img
@@ -34,44 +44,39 @@ export default function Nav() {
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-bold gradient-text">عدسة</span>
-            <span className="text-xs text-orange-400/80 hidden sm:block tracking-wide">
-            </span>
           </div>
-        </NavLink>
+        </Link>
 
         <div className="hidden md:flex items-center">
           <div className="flex items-center bg-[#161616] rounded-full p-1.5 border border-[#262626]">
-            <NavLink to="/" className={navClass}>
+            <Link to="/" className={navClass("/")} onClick={handleScrollToTop}>
               الرئيسية
-            </NavLink>
-            <NavLink to="/blog" className={navClass}>
+            </Link>
+            <Link
+              to="/blog"
+              className={navClass("/blog")}
+              onClick={handleScrollToTop}
+            >
               المدونة
-            </NavLink>
-            <NavLink to="/about" className={navClass}>
+            </Link>
+            <Link
+              to="/about"
+              className={navClass("/about")}
+              onClick={handleScrollToTop}
+            >
               من نحن
-            </NavLink>
+            </Link>
           </div>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button className="icon-btn">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
-          <NavLink to="/blog" className="btn-primary text-white">
+          <Link
+            to="/blog"
+            className="btn-primary text-white"
+            onClick={handleScrollToTop}
+          >
             ابدأ القراءة
-          </NavLink>
+          </Link>
         </div>
 
         <button
@@ -96,27 +101,36 @@ export default function Nav() {
 
       {menuOpen && (
         <div className="flex flex-col mt-2 bg-[#161616] rounded-lg p-2 space-y-2 md:hidden">
-          <NavLink
+          <Link
             to="/"
-            className={mobileNavClass}
-            onClick={() => setMenuOpen(false)}
+            className={mobileNavClass("/")}
+            onClick={() => {
+              setMenuOpen(false);
+              handleScrollToTop();
+            }}
           >
             الرئيسية
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/blog"
-            className={mobileNavClass}
-            onClick={() => setMenuOpen(false)}
+            className={mobileNavClass("/blog")}
+            onClick={() => {
+              setMenuOpen(false);
+              handleScrollToTop();
+            }}
           >
             المدونة
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/about"
-            className={mobileNavClass}
-            onClick={() => setMenuOpen(false)}
+            className={mobileNavClass("/about")}
+            onClick={() => {
+              setMenuOpen(false);
+              handleScrollToTop();
+            }}
           >
             من نحن
-          </NavLink>
+          </Link>
         </div>
       )}
     </div>
